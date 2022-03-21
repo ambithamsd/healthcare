@@ -268,18 +268,13 @@ class Custom
 public function DownloadPDF($param)
 {
 
+
+
 	$pdf = new Fpdfcustom();
+	$pdf->imagePath = $param['Clinic Logo'];
 	$pdf->AliasNbPages();
 	$pdf->AddPage("P","A4");
-	$pdf->Image($param['Clinic Logo'],10,6,30);
-	// Arial bold 15
-	$pdf->SetFont('Arial','B',15);
-	// Move to the right
-	$pdf->Cell(80);
-	// Title
-	$pdf->Cell(30,10,'Report',1,0,'C');
-	// Line break
-	$pdf->Ln(20);
+	
 	$docName = $param['docName'];
 	$pdf->SetFont('arial','',12);
 	unset($param['Clinic Logo']);
@@ -287,6 +282,8 @@ public function DownloadPDF($param)
 
 	foreach($param as $key => $val)
     $pdf->Cell(0,10,$key ."  :-  " . $val,0,1);
+	for($i=1;$i<=40;$i++)
+    $pdf->Cell(0,10,'Printing line number '.$i,0,1);
 
 	$pdf->Output("D",$docName);
 }
